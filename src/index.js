@@ -80,7 +80,7 @@ function handleSearchFormSubmit(e) {
       if (parseInt(data.totalHits) > 0) {
         Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
         renderCards(data.hits);
-        loadMoreButton.style.display = 'flex';
+        loadMoreButton.style.display = 'block';
       } else {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
