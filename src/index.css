@@ -1,3 +1,25 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.load-more {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+}
+.info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30;
+
+  margin: 0 auto;
+}
+.img-look {
+  margin: 10px auto;
+  border-radius: 5px;
+}
+.results-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin: 0 auto;
+}
