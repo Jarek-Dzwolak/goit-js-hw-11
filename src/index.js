@@ -63,7 +63,7 @@ function handleLoadMore() {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
-        SimpleLightbox.refresh();
+        lightbox.refresh();
       }
     })
     .catch(error => console.error(error));
@@ -88,7 +88,7 @@ function handleSearchFormSubmit(e) {
           'Sorry, there are no images matching your search query. Please try again.'
         );
       }
-      SimpleLightbox.refresh();
+      lightbox.refresh();
     })
     .catch(error => console.error(error));
 }
