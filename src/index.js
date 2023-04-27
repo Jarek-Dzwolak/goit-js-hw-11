@@ -7,7 +7,7 @@ const resultsContainer = document.getElementById('results-container');
 const loadMoreButton = document.querySelector('.load-more');
 const API_KEY = '35796974-2bfb24448b11e52eee5b0ed2a';
 let page = 1;
-const lightbox = new SimpleLightbox('.photo-card a');
+const lightbox = new SimpleLightbox('.results-container a');
 function renderCards(hits) {
   resultsContainer.innerHTML = '';
   hits.forEach(hit => {
@@ -34,7 +34,8 @@ function renderCards(hits) {
     infoElement.appendChild(viewsElement);
     infoElement.appendChild(commentsElement);
     infoElement.appendChild(downloadsElement);
-    const cardElement = document.createElement('div');
+    const cardElement = document.createElement('a');
+    cardElement.href = hit.webformatURL;
     cardElement.classList.add('photo-card');
     cardElement.appendChild(imgElement);
     cardElement.appendChild(infoElement);
@@ -53,6 +54,7 @@ function handleLoadMore() {
     .then(data => {
       if (parseInt(data.totalHits) > 0) {
         renderCards(data.hits);
+        lightbox.refresh();
         if (data.hits.length < 40) {
           loadMoreButton.style.display = 'none';
           Notiflix.Notify.warning(
@@ -92,6 +94,6 @@ function handleSearchFormSubmit(e) {
     })
     .catch(error => console.error(error));
 }
-
+lightbox.refresh();
 loadMoreButton.addEventListener('click', handleLoadMore);
 searchForm.addEventListener('submit', handleSearchFormSubmit);
