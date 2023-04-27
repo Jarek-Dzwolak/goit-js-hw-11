@@ -7,7 +7,7 @@ const resultsContainer = document.getElementById('results-container');
 const loadMoreButton = document.querySelector('.load-more');
 const API_KEY = '35796974-2bfb24448b11e52eee5b0ed2a';
 let page = 1;
-
+const lightbox = new SimpleLightbox('.photo-card a');
 function renderCards(hits) {
   resultsContainer.innerHTML = '';
   hits.forEach(hit => {
@@ -63,6 +63,7 @@ function handleLoadMore() {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
+        SimpleLightbox.refresh();
       }
     })
     .catch(error => console.error(error));
@@ -87,9 +88,10 @@ function handleSearchFormSubmit(e) {
           'Sorry, there are no images matching your search query. Please try again.'
         );
       }
+      SimpleLightbox.refresh();
     })
     .catch(error => console.error(error));
 }
-const lightbox = new SimpleLightbox('.photo-card a');
+
 loadMoreButton.addEventListener('click', handleLoadMore);
 searchForm.addEventListener('submit', handleSearchFormSubmit);
