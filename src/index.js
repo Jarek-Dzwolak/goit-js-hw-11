@@ -1,4 +1,5 @@
 import Notiflix from 'notiflix';
+import SimpleLightbox from 'simplelightbox';
 
 const searchForm = document.getElementById('search-form');
 const searchInput = document.getElementById('default-search');
@@ -89,6 +90,6 @@ function handleSearchFormSubmit(e) {
     })
     .catch(error => console.error(error));
 }
-
+const lightbox = new SimpleLightbox('.photo-card a');
 loadMoreButton.addEventListener('click', handleLoadMore);
 searchForm.addEventListener('submit', handleSearchFormSubmit);
