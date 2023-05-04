@@ -1,5 +1,6 @@
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
+import _ from 'lodash';
 
 const searchForm = document.getElementById('search-form');
 const searchInput = document.getElementById('default-search');
@@ -8,6 +9,31 @@ const loadMoreButton = document.querySelector('.load-more');
 const API_KEY = '35796974-2bfb24448b11e52eee5b0ed2a';
 let page = 1;
 const lightbox = new SimpleLightbox('.results-container a');
+
+function handleSearchFormSubmit(e) {
+  e.preventDefault();
+  page = 1;
+  const searchQuery = searchInput.value;
+  const URL = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(
+    searchQuery
+  )}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`;
+  fetch(URL)
+    .then(response => response.json())
+    .then(data => {
+      if (parseInt(data.totalHits) > 0) {
+        Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+        renderCards(data.hits);
+        loadMoreButton.style.display = 'block';
+      } else {
+        Notiflix.Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
+      }
+      lightbox.refresh();
+    })
+    .catch(error => console.error(error));
+}
+
 function renderCards(hits) {
   resultsContainer.innerHTML = '';
   hits.forEach(hit => {
@@ -71,29 +97,6 @@ function handleLoadMore() {
     .catch(error => console.error(error));
 }
 
-function handleSearchFormSubmit(e) {
-  e.preventDefault();
-  page = 1;
-  const searchQuery = searchInput.value;
-  const URL = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(
-    searchQuery
-  )}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`;
-  fetch(URL)
-    .then(response => response.json())
-    .then(data => {
-      if (parseInt(data.totalHits) > 0) {
-        Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
-        renderCards(data.hits);
-        loadMoreButton.style.display = 'block';
-      } else {
-        Notiflix.Notify.failure(
-          'Sorry, there are no images matching your search query. Please try again.'
-        );
-      }
-      lightbox.refresh();
-    })
-    .catch(error => console.error(error));
-}
 lightbox.refresh();
 loadMoreButton.addEventListener('click', handleLoadMore);
 searchForm.addEventListener('submit', handleSearchFormSubmit);
